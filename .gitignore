@@ -1,3 +1,15 @@
+# Don't track our node modules folder
 node_modules/
+
+# Keep our environment secrets safe
+.env
+
+# No system files
 .DS_Store
+Thumbs.db
+
+# Skip the package lock file
 package-lock.json
+
+# Ignore log files
+*.log
