@@ -23,3 +23,11 @@ app.get('/', (req, res) => {
     });
 });
 
+// If something goes wrong, error handling here
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).render('error', {
+        message: 'Oops! Something went wrong.',
+        error: process.env.NODE_ENV === 'development' ? err : {}
+    });
+});
