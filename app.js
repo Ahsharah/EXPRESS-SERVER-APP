@@ -31,3 +31,12 @@ app.use((err, req, res, next) => {
         error: process.env.NODE_ENV === 'development' ? err : {}
     });
 });
+
+// Catches any undefined routes
+app.use((req, res) => {
+    res.status(404).render('error', {
+        message: 'Page not found!',
+        error: { status: 404 }
+    });
+});
+
