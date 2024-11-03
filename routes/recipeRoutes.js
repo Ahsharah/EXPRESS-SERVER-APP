@@ -23,3 +23,7 @@ router.get('/', (req, res) => {
         }
     });
 });
+// GET form to create new recipe(s)..
+router.get('/new', (req, res) => {
+    res.render('recipes/new');
+});
