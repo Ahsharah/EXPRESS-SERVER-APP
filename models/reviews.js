@@ -1,12 +1,19 @@
-// Our recipe data storage
-let recipes = [
+// Store the review data
+let reviews = [
     {
         id: 1,
-        title: "Homemade Pizza",
-        userId: 1,
-        ingredients: ["dough", "tomato sauce", "cheese"],
-        instructions: "1. Preheat oven\n2. Roll dough\n3. Add toppings\n4. Bake",
-        difficulty: "medium",
-        timeInMinutes: 45
+        recipeId: 1,
+        userId: 2,
+        rating: 5,
+        comment: "Best pizza recipe ever!",
+        date: new Date()
     },
     {
+        id: 2,
+        recipeId: 2,
+        userId: 1,
+        rating: 4,
+        comment: "Simple and fresh salad.",
+        date: new Date()
+    }
+];
