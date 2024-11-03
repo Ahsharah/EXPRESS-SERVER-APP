@@ -45,4 +45,15 @@ const ReviewModel = {
             return reviews[index];
         }
         return null;
-    },
+    }, deleteReview: (id) => {
+        const index = reviews.findIndex(review => review.id === parseInt(id));
+        if (index !== -1) {
+            const deletedReview = reviews[index];
+            reviews = reviews.filter(review => review.id !== parseInt(id));
+            return deletedReview;
+        }
+        return null;
+    }
+};
+
+module.exports = ReviewModel;
