@@ -17,3 +17,24 @@ let reviews = [
         date: new Date()
     }
 ];
+const ReviewModel = {
+    getAllReviews: () => reviews,
+    
+    // Get one review
+    getReviewById: (id) => reviews.find(review => review.id === parseInt(id)),
+    
+    // Get all reviews for a recipe
+    getReviewsByRecipe: (recipeId) => reviews.filter(review => review.recipeId === parseInt(recipeId)),
+    
+    // Get all reviews by a user
+    getReviewsByUser: (userId) => reviews.filter(review => review.userId === parseInt(userId)),
+    
+    createReview: (reviewData) => {
+        const newReview = {
+            id: reviews.length + 1,
+            ...reviewData,
+            date: new Date()
+        };
+        reviews.push(newReview);
+        return newReview;
+    },
