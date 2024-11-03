@@ -38,3 +38,11 @@ const ReviewModel = {
         reviews.push(newReview);
         return newReview;
     },
+    updateReview: (id, data) => {
+        const index = reviews.findIndex(review => review.id === parseInt(id));
+        if (index !== -1) {
+            reviews[index] = { ...reviews[index], ...data };
+            return reviews[index];
+        }
+        return null;
+    },
