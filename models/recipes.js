@@ -31,4 +31,15 @@ const UserModel = {
         users.push(newUser);
         return newUser;
     },
-    
+    // Delete a user
+    deleteUser: (id) => {
+        const index = users.findIndex(user => user.id === parseInt(id));
+        if (index !== -1) {
+            const deletedUser = users[index];
+            users = users.filter(user => user.id !== parseInt(id));
+            return deletedUser;
+        }
+        return null;
+    }
+};
+module.exports = UserModel;
