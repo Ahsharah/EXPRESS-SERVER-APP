@@ -37,3 +37,8 @@ router.get('/:id', (req, res) => {
         res.status(404).send('Recipe not found');
     }
 });
+// POST new recipe
+router.post('/', (req, res) => {
+    const newRecipe = RecipeModel.createRecipe(req.body);
+    res.redirect(`/recipes/${newRecipe.id}`);
+});
