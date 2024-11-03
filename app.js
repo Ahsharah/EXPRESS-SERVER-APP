@@ -1,9 +1,11 @@
 //The main server file where everything comes together
 
+
 // First, let's get all the tools need.
 const express = require('express');
 const path = require('path');
 const app = express();
+const recipeRoutes = require('./routes/recipeRoutes');
 
 // Set up our: view engine (lets use EJS templates)
 app.set('view engine', 'ejs');
