@@ -42,3 +42,5 @@ router.post('/', (req, res) => {
     const newRecipe = RecipeModel.createRecipe(req.body);
     res.redirect(`/recipes/${newRecipe.id}`);
 });
+
+Tired and landing in an hour. Saving and taking a break. 1:52AM/2:52AM.
