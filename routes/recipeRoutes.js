@@ -27,3 +27,13 @@ router.get('/', (req, res) => {
 router.get('/new', (req, res) => {
     res.render('recipes/new');
 });
+
+// GET single recipe
+router.get('/:id', (req, res) => {
+    const recipe = RecipeModel.getRecipeById(req.params.id);
+    if (recipe) {
+        res.render('recipes/show', { recipe });
+    } else {
+        res.status(404).send('Recipe not found');
+    }
+});
