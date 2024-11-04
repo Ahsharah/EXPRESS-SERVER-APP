@@ -1,45 +1,60 @@
-// Storing user info/data temporarily (normally this would be a database)
+// Keeping track of my users
 let users = [
     {
         id: 1,
-        username: "Alexandria",
-        email: "alex@example.com",
-        role: "admin"
+        username: "alexandria",
+        email: "alexandria@example.com",
+        role: "admin",
+        joinedAt: new Date()
     },
     {
         id: 2,
-        username: "Jenn",
-        email: "jenn@example.com",
-        role: "user"
+        username: "cookingfriend",
+        email: "friend@example.com",
+        role: "user",
+        joinedAt: new Date()
     }
 ];
 
-// Functions for working with user info/data
+// Here's how I manage my user data
 const UserModel = {
-    // Get all users
+    // Get everyone
     getAllUsers: () => users,
     
-    // Get one user by ID
-    getUserById: (id) => users.find(user => user.id === parseInt(id)),
+    // Find someone specific
+    getUserById: (id) => {
+        return users.find(u => u.id === parseInt(id));
+    },
     
     // Add a new user
-    createUser: (userData) => {
+    createUser: (data) => {
         const newUser = {
             id: users.length + 1,
-            ...userData
+            ...data,
+            joinedAt: new Date()
         };
         users.push(newUser);
         return newUser;
     },
-    // Delete a user
-    deleteUser: (id) => {
-        const index = users.findIndex(user => user.id === parseInt(id));
+    
+    // Update user info
+    updateUser: (id, data) => {
+        const index = users.findIndex(u => u.id === parseInt(id));
         if (index !== -1) {
-            const deletedUser = users[index];
-            users = users.filter(user => user.id !== parseInt(id));
-            return deletedUser;
+            users[index] = { ...users[index], ...data };
+            return users[index];
+        }
+        return null;
+    },
+    
+    // Remove a user
+    deleteUser: (id) => {
+        const index = users.findIndex(u => u.id === parseInt(id));
+        if (index !== -1) {
+            return users.splice(index, 1)[0];
         }
         return null;
     }
 };
+
 module.exports = UserModel;
