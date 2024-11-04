@@ -42,5 +42,23 @@ router.post('/', (req, res) => {
     const newRecipe = RecipeModel.createRecipe(req.body);
     res.redirect(`/recipes/${newRecipe.id}`);
 });
+// PUT - update recipe
+router.put('/:id', (req, res) => {
+    const updated = RecipeModel.updateRecipe(req.params.id, req.body);
+    if (updated) {
+        res.redirect(`/recipes/${updated.id}`);
+    } else {
+        res.status(404).send('Recipe not found');
+    }
+});
+// DELETE recipe
+router.delete('/:id', (req, res) => {
+    const deleted = RecipeModel.deleteRecipe(req.params.id);
+    if (deleted) {
+        res.redirect('/recipes');
+    } else {
+        res.status(404).send('Recipe not found');
+    }
+});
 
-//Tired and landing in an hour. Saving and taking a break. 1:52AM/2:52AM.//
+module.exports = router;
