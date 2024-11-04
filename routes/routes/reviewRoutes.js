@@ -1,54 +1,72 @@
-// Setting up my review system
+// Setting up review routes
 const express = require('express');
 const router = express.Router();
+const ReviewModel = require('../models/reviews');
 
-// Keeping track of my recipe reviews
-let reviews = [
-    {
-        id: 1,
-        recipeId: 1,
-        rating: 5,
-        comment: "This pasta is amazing!",
-        date: new Date()
-    }
-];
-// Get reviews for a specific recipe
+// Get all reviews for a recipe
 router.get('/recipe/:recipeId', (req, res) => {
-    const recipeReviews = reviews.filter(r => 
-        r.recipeId === parseInt(req.params.recipeId)
-    );
-    res.json(recipeReviews);
-});
-// Adding a new review
-router.post('/', (req, res) => {
-    const newReview = {
-        id: reviews.length + 1,
-        recipeId: parseInt(req.body.recipeId),
-        rating: parseInt(req.body.rating),
-        comment: req.body.comment,
-        date: new Date()
-    };
-    reviews.push(newReview);
-    res.status(201).json(newReview);
-});
-// Updating a review
-router.put('/:id', (req, res) => {
-    const index = reviews.findIndex(r => r.id === parseInt(req.params.id));
-    if (index !== -1) {
-        reviews[index] = { ...reviews[index], ...req.body };
-        res.json(reviews[index]);
-    } else {
-        res.status(404).json({ message: "Can't find that review to update!" });
+    try {
+        const reviews = ReviewModel.getReviewsByRecipe(req.params.recipeId);
+        res.render('reviews/index', { reviews });
+    } catch (err) {
+        res.render('error', {
+            message: "Had trouble getting the reviews!",
+            error: { status: 500 }
+        });
     }
 });
-// Removing a review
+
+// Add a new review
+router.post('/', (req, res) => {
+    try {
+        const newReview = ReviewModel.createReview(req.body);
+        res.redirect(`/recipes/${newReview.recipeId}`);
+    } catch (err) {
+        res.render('error', {
+            message: "Couldn't add your review!",
+            error: { status: 500 }
+        });
+    }
+});
+
+// Update a review
+router.put('/:id', (req, res) => {
+    try {
+        const updated = ReviewModel.updateReview(req.params.id, req.body);
+        if (updated) {
+            res.redirect(`/recipes/${updated.recipeId}`);
+        } else {
+            res.render('error', {
+                message: "Can't find that review to update!",
+                error: { status: 404 }
+            });
+        }
+    } catch (err) {
+        res.render('error', {
+            message: "Couldn't update the review!",
+            error: { status: 500 }
+        });
+    }
+});
+
+// Delete a review
 router.delete('/:id', (req, res) => {
-    const index = reviews.findIndex(r => r.id === parseInt(req.params.id));
-    if (index !== -1) {
-        reviews = reviews.filter(r => r.id !== parseInt(req.params.id));
-        res.json({ message: "Review deleted!" });
-    } else {
-        res.status(404).json({ message: "Can't find that review to delete!" });
+    try {
+        const review = ReviewModel.getReviewById(req.params.id);
+        const deleted = ReviewModel.deleteReview(req.params.id);
+        if (deleted) {
+            res.redirect(`/recipes/${review.recipeId}`);
+        } else {
+            res.render('error', {
+                message: "Can't find that review to delete!",
+                error: { status: 404 }
+            });
+        }
+    } catch (err) {
+        res.render('error', {
+            message: "Couldn't delete the review!",
+            error: { status: 500 }
+        });
     }
 });
 

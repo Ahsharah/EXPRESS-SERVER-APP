@@ -1,7 +1,7 @@
 // This is a simple way to check if someone's allowed to do certain things
 const authChecker = (req, res, next) => {
     // For now, I'm just checking if there's a user ID in the query
-    // In a real app, this would check sessions or JWT tokens
+    // If my app were usable/real, this would check "sessions or JWT tokens."
     if (req.query.userId) {
         next();
     } else {
