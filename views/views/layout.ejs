@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <!-- Here's my navigation setup -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="/" class="logo">My Recipe Collection</a>
+            <ul class="nav-links">
+                <li><a href="/recipes">All Recipes</a></li>
+                <li><a href="/recipes/new">Add Recipe</a></li>
+                <li><a href="/reviews">Reviews</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- This is where each page's content will go -->
+    <main class="container">
+        <%- body %>
+    </main>
+
+    <!-- My footer with a personal touch -->
+    <footer class="main-footer">
+        <p>Created with ❤️ by Alex</p>
+    </footer>
+</body>
+</html>
