@@ -2,30 +2,21 @@
 <html>
 <head>
     <title>My Express Recipe App</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background-color: #f0f0f0;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        h1 {
-            color: #333;
-        }
-    </style>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/recipes">Recipes</a></li>
+            <li><a href="/recipes/new">Add Recipe</a></li>
+        </ul>
+    </nav>
+
     <div class="container">
-        <h1><%= title %></h1>
-        <p><%= message %></p>
+        <h1>Welcome to My Recipe App!</h1>
+        <p>Check out my collection of awesome recipes!</p>
+        
         <div>
             <h2>What I've Built:</h2>
             <ul>
@@ -34,6 +25,8 @@
                 <li>Basic Routing</li>
             </ul>
         </div>
+
+        <a href="/recipes" class="button">View Recipes</a>
     </div>
 </body>
 </html>
