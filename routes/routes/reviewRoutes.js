@@ -19,3 +19,15 @@ router.get('/recipe/:recipeId', (req, res) => {
     );
     res.json(recipeReviews);
 });
+// Adding a new review
+router.post('/', (req, res) => {
+    const newReview = {
+        id: reviews.length + 1,
+        recipeId: parseInt(req.body.recipeId),
+        rating: parseInt(req.body.rating),
+        comment: req.body.comment,
+        date: new Date()
+    };
+    reviews.push(newReview);
+    res.status(201).json(newReview);
+});
