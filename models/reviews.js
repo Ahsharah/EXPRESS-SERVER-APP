@@ -1,56 +1,59 @@
-// Store the review data
+// Storing reviews for my recipes
 let reviews = [
     {
         id: 1,
         recipeId: 1,
         userId: 2,
         rating: 5,
-        comment: "Best pizza recipe ever!",
-        date: new Date()
+        comment: "Love this pasta recipe!",
+        createdAt: new Date()
     },
     {
         id: 2,
         recipeId: 2,
         userId: 1,
         rating: 4,
-        comment: "Simple and fresh salad.",
-        date: new Date()
+        comment: "Great quick breakfast.",
+        createdAt: new Date()
     }
 ];
+
+// Here's how I handle reviews
 const ReviewModel = {
+    // Get all reviews
     getAllReviews: () => reviews,
     
-    // Get one review
-    getReviewById: (id) => reviews.find(review => review.id === parseInt(id)),
+    // Get reviews for a specific recipe
+    getReviewsByRecipe: (recipeId) => {
+        return reviews.filter(r => r.recipeId === parseInt(recipeId));
+    },
     
-    // Get all reviews for a recipe
-    getReviewsByRecipe: (recipeId) => reviews.filter(review => review.recipeId === parseInt(recipeId)),
-    
-    // Get all reviews by a user
-    getReviewsByUser: (userId) => reviews.filter(review => review.userId === parseInt(userId)),
-    
-    createReview: (reviewData) => {
+    // Add a new review
+    createReview: (data) => {
         const newReview = {
             id: reviews.length + 1,
-            ...reviewData,
-            date: new Date()
+            ...data,
+            createdAt: new Date()
         };
         reviews.push(newReview);
         return newReview;
     },
+    
+    // Update a review
     updateReview: (id, data) => {
-        const index = reviews.findIndex(review => review.id === parseInt(id));
+        const index = reviews.findIndex(r => r.id === parseInt(id));
         if (index !== -1) {
             reviews[index] = { ...reviews[index], ...data };
             return reviews[index];
         }
         return null;
-    }, deleteReview: (id) => {
-        const index = reviews.findIndex(review => review.id === parseInt(id));
+    },
+    
+    // Remove a review
+    deleteReview: (id) => {
+        const index = reviews.findIndex(r => r.id === parseInt(id));
         if (index !== -1) {
-            const deletedReview = reviews[index];
-            reviews = reviews.filter(review => review.id !== parseInt(id));
-            return deletedReview;
+            return reviews.splice(index, 1)[0];
         }
         return null;
     }
