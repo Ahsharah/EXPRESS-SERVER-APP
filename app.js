@@ -16,6 +16,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // This allows serve static files like CSS from public folder
 app.use(express.static(path.join(__dirname, 'public')));
+//Adding middleware (?)
+app.use('/recipes', recipeRoutes);
 
 // Here's home page route
 app.get('/', (req, res) => {
