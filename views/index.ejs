@@ -1,21 +1,21 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title><%= title %></title>
-    <link rel="stylesheet" href="/css/style.css">
-</head>
-<body>
-    <div class="container">
-        <h1><%= title %></h1>
-        <p><%= message %></p>
+<%- include('layout', { title: 'Welcome!' }) %>
+
+<div class="welcome-section">
+    <h1>Welcome to My Recipe Collection!</h1>
+    <p>This is where I share my favorite recipes and cooking adventures.</p>
+    
+    <!-- Quick navigation cards -->
+    <div class="feature-cards">
+        <div class="card">
+            <h2>Browse Recipes</h2>
+            <p>Check out my collection of tasty recipes</p>
+            <a href="/recipes" class="button">View Recipes</a>
+        </div>
         
-        <nav>
-            <ul>
-                <li><a href="/users">Users</a></li>
-                <li><a href="/recipes">Recipes</a></li>
-                <li><a href="/reviews">Reviews</a></li>
-            </ul>
-        </nav>
+        <div class="card">
+            <h2>Share a Recipe</h2>
+            <p>Got a recipe to share? Add it here!</p>
+            <a href="/recipes/new" class="button">Add Recipe</a>
+        </div>
     </div>
-</body>
-</html>
+</div>
