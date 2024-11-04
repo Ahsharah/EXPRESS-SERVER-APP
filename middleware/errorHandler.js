@@ -7,3 +7,12 @@ const errorHandler = (err, req, res, next) => {
     const message = status === 404 
         ? "I couldn't find what you're looking for!" 
         : "Something went wrong on my end!";
+         // In development, I want to see the full error
+    const error = process.env.NODE_ENV === 'development' 
+    ? err 
+    : { status, message };
+
+res.status(status).render('error', { message, error });
+};
+
+module.exports = errorHandler;
