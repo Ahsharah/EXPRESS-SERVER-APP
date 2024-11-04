@@ -1,47 +1,44 @@
-// Keeping track of my users
+// Keeping track of users who share recipes
 let users = [
     {
         id: 1,
         username: "alexandria",
         email: "alexandria@example.com",
-        role: "admin",
-        joinedAt: new Date()
+        favoriteRecipes: [1, 2]
     },
     {
         id: 2,
         username: "cookingfriend",
         email: "friend@example.com",
-        role: "user",
-        joinedAt: new Date()
+        favoriteRecipes: [1]
     }
 ];
 
-// Here's how I manage my user data
+// Functions for managing my user data
 const UserModel = {
-    // Get everyone
+    // Get all users
     getAllUsers: () => users,
     
-    // Find someone specific
-    getUserById: (id) => {
-        return users.find(u => u.id === parseInt(id));
-    },
+    // Find a specific user
+    getUserById: (id) => users.find(u => u.id === parseInt(id)),
     
     // Add a new user
-    createUser: (data) => {
+    createUser: (userData) => {
         const newUser = {
             id: users.length + 1,
-            ...data,
-            joinedAt: new Date()
+            ...userData,
+            favoriteRecipes: [],
+            joinedDate: new Date()
         };
         users.push(newUser);
         return newUser;
     },
     
     // Update user info
-    updateUser: (id, data) => {
+    updateUser: (id, updates) => {
         const index = users.findIndex(u => u.id === parseInt(id));
         if (index !== -1) {
-            users[index] = { ...users[index], ...data };
+            users[index] = { ...users[index], ...updates };
             return users[index];
         }
         return null;
@@ -51,7 +48,9 @@ const UserModel = {
     deleteUser: (id) => {
         const index = users.findIndex(u => u.id === parseInt(id));
         if (index !== -1) {
-            return users.splice(index, 1)[0];
+            const deleted = users[index];
+            users = users.filter(u => u.id !== parseInt(id));
+            return deleted;
         }
         return null;
     }

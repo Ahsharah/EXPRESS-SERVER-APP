@@ -1,63 +1,66 @@
-// This is where I store my recipe data for now
+// Here's where I store my recipe data for now - later this could be a database
 let recipes = [
     {
         id: 1,
         title: "My Favorite Pasta",
         ingredients: ["pasta", "tomatoes", "garlic", "basil"],
-        instructions: "Cook pasta, make sauce, mix together",
+        instructions: "Boil pasta, make sauce with tomatoes and garlic, mix together!",
         difficulty: "easy",
-        timeInMinutes: 20,
-        userId: 1,
-        createdAt: new Date()
+        prepTime: 30,
+        userId: 1
     },
     {
         id: 2,
         title: "Quick Breakfast Sandwich",
-        ingredients: ["bread", "eggs", "cheese", "butter"],
-        instructions: "Toast bread, fry egg, assemble sandwich",
+        ingredients: ["bread", "eggs", "cheese"],
+        instructions: "Toast bread, fry egg, add cheese, enjoy!",
         difficulty: "easy",
-        timeInMinutes: 10,
-        userId: 1,
-        createdAt: new Date()
+        prepTime: 15,
+        userId: 1
     }
 ];
 
-// Here's how I manage my recipe data
+// Functions for working with my recipe data
 const RecipeModel = {
     // Get all my recipes
     getAllRecipes: () => recipes,
     
     // Find a specific recipe
-    getRecipeById: (id) => {
-        return recipes.find(r => r.id === parseInt(id));
+    getRecipeById: (id) => recipes.find(r => r.id === parseInt(id)),
+    
+    // Get recipes by difficulty level
+    getRecipesByDifficulty: (difficulty) => {
+        return recipes.filter(r => r.difficulty === difficulty);
     },
     
-    // Add a new recipe to my collection
-    createRecipe: (data) => {
+    // Add a new recipe
+    createRecipe: (recipeData) => {
         const newRecipe = {
             id: recipes.length + 1,
-            ...data,
-            createdAt: new Date()
+            ...recipeData,
+            created: new Date()
         };
         recipes.push(newRecipe);
         return newRecipe;
     },
     
-    // Update one of my recipes
-    updateRecipe: (id, data) => {
+    // Update a recipe
+    updateRecipe: (id, updates) => {
         const index = recipes.findIndex(r => r.id === parseInt(id));
         if (index !== -1) {
-            recipes[index] = { ...recipes[index], ...data };
+            recipes[index] = { ...recipes[index], ...updates };
             return recipes[index];
         }
         return null;
     },
     
-    // Remove a recipe
+    // Delete a recipe
     deleteRecipe: (id) => {
         const index = recipes.findIndex(r => r.id === parseInt(id));
         if (index !== -1) {
-            return recipes.splice(index, 1)[0];
+            const deleted = recipes[index];
+            recipes = recipes.filter(r => r.id !== parseInt(id));
+            return deleted;
         }
         return null;
     }

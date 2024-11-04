@@ -1,14 +1,18 @@
-// This helps me check if users are logged in
-const checkAuth = (req, res, next) => {
-    // keep simple
-    if (req.headers.authorization) {
+// This is a simple way to check if someone's allowed to do certain things
+const authChecker = (req, res, next) => {
+    // For now, I'm just checking if there's a user ID in the query
+    // In a real app, this would check sessions or JWT tokens
+    if (req.query.userId) {
         next();
     } else {
         res.status(401).render('error', {
-            message: "You need to log in first!",
-            error: { status: 401 }
+            message: "Hold on! You need to be logged in to do that!",
+            error: { 
+                status: 401,
+                details: "Authentication required"
+            }
         });
     }
 };
 
-module.exports = checkAuth;
+module.exports = authChecker;
