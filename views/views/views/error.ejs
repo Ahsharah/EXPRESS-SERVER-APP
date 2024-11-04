@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Oops! Something went wrong</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="error-container">
+        <div class="error-content">
+            <h1>Oops!</h1>
+            <p class="error-message"><%= message %></p>
+            
+            <% if (error.status) { %>
+                <p class="error-status">Status: <%= error.status %></p>
+            <% } %>
+
+            <div class="error-actions">
+                <a href="/" class="button">Back to Home</a>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .error-container {
+            text-align: center;
+            padding: 50px 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .error-message {
+            font-size: 1.2em;
+            color: #666;
+            margin: 20px 0;
+        }
+
+        .error-status {
+            color: #999;
+            font-size: 0.9em;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</body>
+</html>
