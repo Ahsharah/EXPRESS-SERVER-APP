@@ -1,36 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Error</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background-color: #f0f0f0;
-        }
-        .error-container {
-            max-width: 600px;
-            margin: 0 auto;
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            text-align: center;
-        }
-        .error-message {
-            color: #d32f2f;
-        }
-    </style>
+    <title>Oops! - Error</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
     <div class="error-container">
         <h1>Oops!</h1>
         <p class="error-message"><%= message %></p>
         <% if (error.status) { %>
-            <p>Status: <%= error.status %></p>
+            <p class="error-status">Status: <%= error.status %></p>
         <% } %>
-        <a href="/" style="color: blue; text-decoration: none;">Back to Home</a>
+        <a href="/" class="button">Back to Home</a>
     </div>
 </body>
 </html>
