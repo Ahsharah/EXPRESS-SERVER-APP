@@ -1,0 +1,38 @@
+<%- include('../layout', { title: 'Add New Recipe' }) %>
+
+<div class="form-container">
+    <h1>Share a New Recipe</h1>
+    
+    <form action="/recipes" method="POST" class="recipe-form">
+        <div class="form-group">
+            <label for="title">Recipe Name:</label>
+            <input type="text" id="title" name="title" required>
+        </div>
+
+        <div class="form-group">
+            <label for="ingredients">Ingredients (one per line):</label>
+            <textarea id="ingredients" name="ingredients" rows="5" required></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="instructions">Instructions:</label>
+            <textarea id="instructions" name="instructions" rows="5" required></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="difficulty">Difficulty:</label>
+            <select id="difficulty" name="difficulty" required>
+                <option value="easy">Easy</option>
+                <option value="medium">Medium</option>
+                <option value="hard">Hard</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="timeInMinutes">Cooking Time (minutes):</label>
+            <input type="number" id="timeInMinutes" name="timeInMinutes" required>
+        </div>
+
+        <button type="submit" class="submit-button">Add Recipe</button>
+    </form>
+</div>
