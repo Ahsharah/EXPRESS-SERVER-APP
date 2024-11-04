@@ -31,3 +31,25 @@ router.post('/', (req, res) => {
     reviews.push(newReview);
     res.status(201).json(newReview);
 });
+// Updating a review
+router.put('/:id', (req, res) => {
+    const index = reviews.findIndex(r => r.id === parseInt(req.params.id));
+    if (index !== -1) {
+        reviews[index] = { ...reviews[index], ...req.body };
+        res.json(reviews[index]);
+    } else {
+        res.status(404).json({ message: "Can't find that review to update!" });
+    }
+});
+// Removing a review
+router.delete('/:id', (req, res) => {
+    const index = reviews.findIndex(r => r.id === parseInt(req.params.id));
+    if (index !== -1) {
+        reviews = reviews.filter(r => r.id !== parseInt(req.params.id));
+        res.json({ message: "Review deleted!" });
+    } else {
+        res.status(404).json({ message: "Can't find that review to delete!" });
+    }
+});
+
+module.exports = router;
