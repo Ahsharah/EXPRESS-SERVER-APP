@@ -1,32 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>My Express Recipe App</title>
+    <title><%= title %></title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <nav>
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/recipes">Recipes</a></li>
-            <li><a href="/recipes/new">Add Recipe</a></li>
-        </ul>
-    </nav>
-
     <div class="container">
-        <h1>Welcome to My Recipe App!</h1>
-        <p>Check out my collection of awesome recipes!</p>
-        
-        <div>
-            <h2>What I've Built:</h2>
-            <ul>
-                <li>Express Server</li>
-                <li>EJS Templates</li>
-                <li>Basic Routing</li>
-            </ul>
-        </div>
+        <h1><%= title %></h1>
+        <p><%= message %></p>
 
-        <a href="/recipes" class="button">View Recipes</a>
+        <div class="features">
+            <div class="feature-card">
+                <h2>My Recipes</h2>
+                <p>Check out my collection of recipes!</p>
+                <a href="/recipes" class="button">View Recipes</a>
+            </div>
+
+            <div class="feature-card">
+                <h2>Share a Recipe</h2>
+                <p>Got a recipe to share?</p>
+                <a href="/recipes/new" class="button">Add Recipe</a>
+            </div>
+        </div>
     </div>
 </body>
 </html>
