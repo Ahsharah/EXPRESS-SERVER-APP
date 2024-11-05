@@ -1,84 +1,48 @@
-// Setting up my recipe routes
+// Here's where I handle my recipe-related routes
 const express = require('express');
 const router = express.Router();
+const RecipeModel = require('../models/recipes');  // Import the model
 
-// My recipe data (would usually be in a database)
-let recipes = [
-    {
-        id: 1,
-        title: "My Favorite Pasta",
-        ingredients: ["pasta", "sauce", "cheese"],
-        instructions: "Boil pasta, add sauce and cheese",
-        difficulty: "easy"
-    },
-    {
-        id: 2,
-        title: "Simple Salad",
-        ingredients: ["lettuce", "tomatoes", "cucumber"],
-        instructions: "Chop everything and mix",
-        difficulty: "easy"
-    }
-];
-
-// Show all recipes
+// Get all recipes
 router.get('/', (req, res) => {
-    // If they want to filter by difficulty
-    if (req.query.difficulty) {
-        const filtered = recipes.filter(recipe => 
-            recipe.difficulty === req.query.difficulty
-        );
-        res.json(filtered);
-    } else {
-        res.json(recipes);
-    }
+    const recipes = RecipeModel.getAllRecipes();  // Use the model method
+    res.render('recipes/index', { recipes });
 });
 
-// Get a single recipe
+// Show form for new recipe
+router.get('/new', (req, res) => {
+    res.render('recipes/new');
+});
+
+// Get single recipe
 router.get('/:id', (req, res) => {
-    const recipe = recipes.find(r => r.id === parseInt(req.params.id));
+    const recipe = RecipeModel.getRecipeById(req.params.id);
     if (recipe) {
-        res.json(recipe);
+        res.render('recipes/show', { recipe });
     } else {
-        res.status(404).json({ message: "Recipe not found!" });
+        res.status(404).render('error', {
+            message: "Recipe not found",
+            error: { status: 404 }
+        });
     }
 });
 
-// Add a new recipe
+// Create new recipe
 router.post('/', (req, res) => {
-    const newRecipe = {
-        id: recipes.length + 1,
-        title: req.body.title,
-        ingredients: req.body.ingredients,
-        instructions: req.body.instructions,
-        difficulty: req.body.difficulty || 'medium'
-    };
-    recipes.push(newRecipe);
-    res.status(201).json(newRecipe);
+    const newRecipe = RecipeModel.createRecipe(req.body);
+    res.redirect(`/recipes/${newRecipe.id}`);
 });
 
-// Update a recipe
-router.put('/:id', (req, res) => {
-    const index = recipes.findIndex(r => r.id === parseInt(req.params.id));
-    if (index !== -1) {
-        recipes[index] = { 
-            ...recipes[index], 
-            ...req.body,
-            id: recipes[index].id // Make sure ID doesn't change
-        };
-        res.json(recipes[index]);
-    } else {
-        res.status(404).json({ message: "Recipe not found!" });
-    }
-});
-
-// Delete a recipe
+// Delete recipe
 router.delete('/:id', (req, res) => {
-    const index = recipes.findIndex(r => r.id === parseInt(req.params.id));
-    if (index !== -1) {
-        recipes = recipes.filter(r => r.id !== parseInt(req.params.id));
-        res.json({ message: "Recipe deleted!" });
+    const deleted = RecipeModel.deleteRecipe(req.params.id);
+    if (deleted) {
+        res.redirect('/recipes');
     } else {
-        res.status(404).json({ message: "Recipe not found!" });
+        res.status(404).render('error', {
+            message: "Couldn't delete that recipe",
+            error: { status: 404 }
+        });
     }
 });
 

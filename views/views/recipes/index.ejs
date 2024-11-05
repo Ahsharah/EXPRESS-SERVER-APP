@@ -1,47 +1,52 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>My Recipes</title>
+    <title>My Recipe Collection</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
     <div class="container">
         <h1>My Recipe Collection</h1>
-
-        <!-- Recipe filter -->
-        <div class="filter-section">
-            <form action="/recipes" method="GET">
-                <select name="difficulty">
-                    <option value="">All Difficulties</option>
-                    <option value="easy">Easy</option>
-                    <option value="medium">Medium</option>
-                    <option value="hard">Hard</option>
-                </select>
-                <button type="submit">Filter</button>
-            </form>
+        
+        <div class="recipe-actions mb-20">
+            <a href="/recipes/new" class="button add">Add New Recipe</a>
         </div>
 
-        <!-- Recipe grid -->
-        <div class="recipe-grid">
-            <% recipes.forEach(recipe => { %>
-                <div class="recipe-card">
-                    <h2><%= recipe.title %></h2>
-                    <p>Difficulty: <%= recipe.difficulty %></p>
-                    <div class="recipe-actions">
-                        <a href="/recipes/<%= recipe.id %>" class="button">View</a>
-                        <a href="/recipes/<%= recipe.id %>/edit" class="button">Edit</a>
-                        <form action="/recipes/<%= recipe.id %>" method="POST" style="display: inline;">
-                            <input type="hidden" name="_method" value="DELETE">
-                            <button type="submit" class="button delete">Delete</button>
-                        </form>
+        <% if (recipes && recipes.length > 0) { %>
+            <div class="recipe-grid">
+                <% recipes.forEach(recipe => { %>
+                    <div class="recipe-card">
+                        <h2><%= recipe.title %></h2>
+                        <div class="recipe-details">
+                            <p><strong>Difficulty:</strong> <%= recipe.difficulty %></p>
+                            <% if (recipe.ingredients) { %>
+                                <p><strong>Ingredients:</strong></p>
+                                <ul>
+                                    <% recipe.ingredients.forEach(ingredient => { %>
+                                        <li><%= ingredient %></li>
+                                    <% }) %>
+                                </ul>
+                            <% } %>
+                        </div>
+                        <div class="recipe-actions">
+                            <a href="/recipes/<%= recipe.id %>" class="button">View</a>
+                            <form action="/recipes/<%= recipe.id %>" method="POST" style="display: inline;">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <button type="submit" class="button delete">Delete</button>
+                            </form>
+                        </div>
                     </div>
-                </div>
-            <% }); %>
-        </div>
-
-        <div class="add-recipe">
-            <a href="/recipes/new" class="button">Add New Recipe</a>
-        </div>
+                <% }) %>
+            </div>
+        <% } else { %>
+            <div class="text-center mt-20">
+                <p>No recipes yet! Why not add one?</p>
+            </div>
+        <% } %>
     </div>
+
+    <footer class="main-footer">
+        <p>Thanks for visiting my recipe collection!</p>
+    </footer>
 </body>
 </html>
