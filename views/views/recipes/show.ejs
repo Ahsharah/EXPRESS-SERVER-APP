@@ -1,41 +1,37 @@
-<%- include('../layout', { title: recipe.title }) %>
-
-<div class="recipe-detail">
-    <h1><%= recipe.title %></h1>
-    
-    <div class="recipe-info">
-        <p class="difficulty">Difficulty: <%= recipe.difficulty %></p>
-        <p class="time">Time: <%= recipe.timeInMinutes %> minutes</p>
-    </div>
-
-    <div class="recipe-section">
-        <h2>Ingredients</h2>
-        <ul>
-            <% recipe.ingredients.forEach(ingredient => { %>
-                <li><%= ingredient %></li>
-            <% }); %>
-        </ul>
-    </div>
-
-    <div class="recipe-section">
-        <h2>Instructions</h2>
-        <div class="instructions">
-            <%= recipe.instructions %>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Recipe Details</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1><%= recipe.title %></h1>
+        
+        <div class="recipe-card">
+            <div class="recipe-details">
+                <p><strong>Difficulty:</strong> <%= recipe.difficulty %></p>
+                
+                <h2>Ingredients:</h2>
+                <ul>
+                    <% recipe.ingredients.forEach(ingredient => { %>
+                        <li><%= ingredient %></li>
+                    <% }) %>
+                </ul>
+                
+                <h2>Instructions:</h2>
+                <p><%= recipe.instructions %></p>
+            </div>
+            
+            <div class="recipe-actions">
+                <a href="/recipes" class="button">Back to Recipes</a>
+                <a href="/recipes/<%= recipe.id %>/edit" class="button edit">Edit</a>
+                <form action="/recipes/<%= recipe.id %>" method="POST" style="display: inline;">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button type="submit" class="button delete">Delete</button>
+                </form>
+            </div>
         </div>
     </div>
-
-    <!-- Review section -->
-    <div class="reviews-section">
-        <h2>Reviews</h2>
-        <% if (recipe.reviews && recipe.reviews.length > 0) { %>
-            <% recipe.reviews.forEach(review => { %>
-                <div class="review">
-                    <p class="rating">Rating: <%= review.rating %>/5</p>
-                    <p class="comment"><%= review.comment %></p>
-                </div>
-            <% }); %>
-        <% } else { %>
-            <p>No reviews yet!</p>
-        <% } %>
-    </div>
-</div>
+</body>
+</html>

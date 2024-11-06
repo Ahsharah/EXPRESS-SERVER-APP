@@ -1,35 +1,23 @@
-<%- include('../layout', { title: 'My Recipes' }) %>
-
-<div class="recipes-container">
-    <!-- My filter options -->
-    <div class="filter-section">
-        <h2>Find a Recipe</h2>
-        <form action="/recipes" method="GET" class="filter-form">
-            <select name="difficulty" class="filter-select">
-                <option value="">All Difficulties</option>
-                <option value="easy">Easy</option>
-                <option value="medium">Medium</option>
-                <option value="hard">Hard</option>
-            </select>
-            <button type="submit" class="filter-button">Filter</button>
-        </form>
-    </div>
-
-    <!-- Display all my recipes in a grid -->
-    <div class="recipe-grid">
-        <% recipes.forEach(recipe => { %>
-            <div class="recipe-card">
-                <h3><%= recipe.title %></h3>
-                <p class="recipe-difficulty">Difficulty: <%= recipe.difficulty %></p>
-                <p class="recipe-time">Time: <%= recipe.timeInMinutes %> minutes</p>
-                <div class="recipe-actions">
-                    <a href="/recipes/<%= recipe.id %>" class="button">View</a>
-                    <a href="/recipes/<%= recipe.id %>/edit" class="button">Edit</a>
-                    <form action="/recipes/<%= recipe.id %>?_method=DELETE" method="POST" style="display: inline;">
-                        <button type="submit" class="button delete">Delete</button>
-                    </form>
-                </div>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Error</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="error-container">
+            <h1>Oops!</h1>
+            <div class="error-message">
+                <%= message %>
             </div>
-        <% }); %>
+            <% if (error && error.status) { %>
+                <div class="error-status">
+                    Status: <%= error.status %>
+                </div>
+            <% } %>
+            <a href="/" class="button">Return to Home</a>
+        </div>
     </div>
-</div>
+</body>
+</html>
